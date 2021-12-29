@@ -18,19 +18,8 @@ struct MenuView: View {
                     .foregroundColor(.black)
                     .bold()
                 
-                Color.white// Color counts as a view
-                    .frame(width: 38, height: 6) // set inner progress bar frame
-                    .cornerRadius(3)             // set corder radius of innerProgressBarFrame
-                    .frame(width:130, height: 6, alignment: .leading) // set outer progressBar frame
-                    .background(Color.black.opacity(0.08)) // set color of outer progressBar frame
-                    .cornerRadius(3)
-                    .padding()
-                    .frame(width: 150, height: 24)
-                    .background(Color.black.opacity(0.1))
-                    .cornerRadius(12)
-                    .shadow(radius: 20)
-                
-                
+                ProgressBar()
+
                 MenuRow(title:"Account", iconName: "gear")
                 MenuRow(title:"Billing", iconName: "creditcard")
                 MenuRow(title:"Sign out", iconName: "person.crop.circle")
@@ -44,12 +33,7 @@ struct MenuView: View {
             .shadow(color: Color.blue.opacity(0.2), radius: 20, x: 0, y: 20)
             .padding(.horizontal, 30)
             .overlay(
-                Image("Avatar")
-                    .resizable()
-                    .aspectRatio( contentMode: .fill)
-                    .frame(width: 60, height: 60)
-                    .clipShape(Circle())
-                    .offset(y: -150)
+                Avatar()
             )
         }
         
@@ -84,5 +68,32 @@ struct MenuRow: View {
                 .frame(width: 120, alignment: .leading)
             
         }
+    }
+}
+
+struct Avatar: View {
+    var body: some View {
+        Image("Avatar")
+            .resizable()
+            .aspectRatio( contentMode: .fill)
+            .frame(width: 60, height: 60)
+            .clipShape(Circle())
+            .offset(y: -150)
+    }
+}
+
+struct ProgressBar: View {
+    var body: some View {
+        Color.white// Color counts as a view
+            .frame(width: 38, height: 6) // set inner progress bar frame
+            .cornerRadius(3)             // set corder radius of innerProgressBarFrame
+            .frame(width:130, height: 6, alignment: .leading) // set outer progressBar frame
+            .background(Color.black.opacity(0.08)) // set color of outer progressBar frame
+            .cornerRadius(3)
+            .padding()
+            .frame(width: 150, height: 24)
+            .background(Color.black.opacity(0.1))
+            .cornerRadius(12)
+            .shadow(radius: 20)
     }
 }
