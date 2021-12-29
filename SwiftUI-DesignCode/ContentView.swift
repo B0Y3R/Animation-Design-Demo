@@ -12,6 +12,8 @@ struct ContentView: View {
     @State private var show: Bool = false
     @State private var viewState: CGSize = CGSize.zero
     @State private var showCard: Bool = false
+    @State private var bottomCardState: CGSize = CGSize.zero
+    @State private var showFull: Bool = false
     
     var body: some View {
         ZStack {
@@ -90,8 +92,37 @@ struct ContentView: View {
             
             BottomCardView()
                 .offset(x: 0, y: showCard ? 360 : 1000 )
+                .offset(y: bottomCardState.height)
                 .blur(radius: show ? 20 : 0)
                 .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            bottomCardState = value.translation
+                            
+                            if showFull {
+                                bottomCardState.height += -300
+                            }
+                            
+                            if bottomCardState.height < -300 {
+                                bottomCardState.height = -300
+                            }
+
+                        }
+                        .onEnded { value in
+                            if bottomCardState.height > 100 {
+                                showCard = false
+                            }
+                            
+                            if (bottomCardState.height < -100 && !showFull) || (bottomCardState.height < -250 && showFull) {
+                                showFull = true
+                                bottomCardState.height = -300
+                            } else {
+                                bottomCardState = .zero
+                                showFull = false
+                            }
+                        }
+                )
     
         }
         .animation(.easeInOut(duration: 0.35))
@@ -180,5 +211,6 @@ struct BottomCardView: View {
         .background(.white)
         .cornerRadius(30)
         .shadow(radius: 20)
+        
     }
 }
