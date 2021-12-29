@@ -12,6 +12,7 @@
 		7D680E70277BE396005B13A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D680E6F277BE396005B13A5 /* Assets.xcassets */; };
 		7D680E73277BE396005B13A5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D680E72277BE396005B13A5 /* Preview Assets.xcassets */; };
 		7DBCEED0277CE1F9008EE18D /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEECF277CE1F9008EE18D /* MenuView.swift */; };
+		7DBCEED2277CFDCF008EE18D /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEED1277CFDCF008EE18D /* Home.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		7D680E6F277BE396005B13A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7D680E72277BE396005B13A5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7DBCEECF277CE1F9008EE18D /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		7DBCEED1277CFDCF008EE18D /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,9 +57,10 @@
 			children = (
 				7D680E6B277BE395005B13A5 /* SwiftUI_DesignCodeApp.swift */,
 				7D680E6D277BE395005B13A5 /* ContentView.swift */,
+				7DBCEED1277CFDCF008EE18D /* Home.swift */,
+				7DBCEECF277CE1F9008EE18D /* MenuView.swift */,
 				7D680E6F277BE396005B13A5 /* Assets.xcassets */,
 				7D680E71277BE396005B13A5 /* Preview Content */,
-				7DBCEECF277CE1F9008EE18D /* MenuView.swift */,
 			);
 			path = "SwiftUI-DesignCode";
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			files = (
 				7D680E6E277BE395005B13A5 /* ContentView.swift in Sources */,
 				7DBCEED0277CE1F9008EE18D /* MenuView.swift in Sources */,
+				7DBCEED2277CFDCF008EE18D /* Home.swift in Sources */,
 				7D680E6C277BE395005B13A5 /* SwiftUI_DesignCodeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

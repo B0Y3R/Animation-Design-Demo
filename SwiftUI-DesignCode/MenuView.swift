@@ -15,6 +15,8 @@ struct MenuView: View {
             VStack(spacing: 16) {
                 Text("James - 28% complete")
                     .font(.caption)
+                    .foregroundColor(.black)
+                    .bold()
                 
                 Color.white// Color counts as a view
                     .frame(width: 38, height: 6) // set inner progress bar frame
@@ -36,7 +38,7 @@ struct MenuView: View {
             .frame(maxWidth: .infinity)
             .frame(height: 300)
             .background(
-                LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7882352941, green: 0.8941176471, blue: 0.9450980392, alpha: 1))]), startPoint: .top, endPoint: .bottomTrailing)
+                LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.9932606816, green: 0.9932606816, blue: 0.9932606816, alpha: 1)), Color(#colorLiteral(red: 0.8916490674, green: 0.8994777799, blue: 0.9694784284, alpha: 1)), Color(#colorLiteral(red: 0.8229213357, green: 0.8178169131, blue: 0.9513029456, alpha: 1)),]), startPoint: .top, endPoint: .bottom)
             )
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .shadow(color: Color.blue.opacity(0.2), radius: 20, x: 0, y: 20)
@@ -75,10 +77,12 @@ struct MenuRow: View {
                 .font(.system(size: size, weight: .light))
                 .imageScale(.large)
                 .frame(width: 32, height: 32)
-                .foregroundColor(Color("card1").opacity(0.5))
+                .foregroundColor(Color("card1").opacity(0.7))
             Text(title)
                 .font(.system(size: size, weight: .bold, design: .default))
+                .foregroundColor(.black)
                 .frame(width: 120, alignment: .leading)
+            
         }
     }
 }

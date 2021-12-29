@@ -203,7 +203,7 @@ struct BottomCardView: View {
                 .cornerRadius(3)
                 .opacity(0.1)
             
-            Text("This certificate is proof that James Boyer has achieved the UI Design course with approval from a Design+Code instructor.")
+            Text("VINNY IS AN AGENT OF CHAOS")
                 .multilineTextAlignment(.center)
                 .font(.subheadline)
                 .lineSpacing(4)
