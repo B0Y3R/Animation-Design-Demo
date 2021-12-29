@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var show: Bool = false
+    @State private var viewState: CGSize = CGSize.zero
     
     var body: some View {
         ZStack {
@@ -22,6 +23,7 @@ struct ContentView: View {
                 rotationDegrees: show ? 0 : 12,
                 rotation3dDegrees: 10
             )
+                .offset(x: viewState.width, y: viewState.height )
                 .animation(.easeInOut(duration: 0.4))
 
             BackCardView(
@@ -30,11 +32,29 @@ struct ContentView: View {
                 rotationDegrees: show ? 0 : 5 ,
                 rotation3dDegrees: 5
             )
+                .offset(x: viewState.width, y: viewState.height )
 
             CardView()
+                .offset(x: viewState.width, y: viewState.height )
                 .onTapGesture {
                     show.toggle()
                 }
+                .animation(
+                    .spring(
+                        response: 0.5,
+                        dampingFraction: 0.5,
+                        blendDuration: 0.9
+                    )
+                )
+                .gesture(
+                    DragGesture()
+                        .onChanged {value in
+                            viewState = value.translation
+                        }
+                        .onEnded({ value in
+                            viewState = .zero
+                        })
+                )
             
             BottomCardView()
                 .blur(radius: show ? 20 : 0)
