@@ -9,34 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var show: Bool = false
-    @State private var viewState: CGSize = CGSize.zero
-    @State private var showCard: Bool = false
-    @State private var bottomCardState: CGSize = CGSize.zero
-    @State private var showFull: Bool = false
+    @State var viewState: CGSize = CGSize.zero
+    @State var showCard: Bool = false
+    @State var bottomCardState: CGSize = CGSize.zero
+    @State var showFull: Bool = false
     
     var body: some View {
         ZStack {
-            TitleView()
-                .blur(radius: show ? 20 : 0)
-                .opacity(showCard ? 0.2 : 1)
-                .offset(x: 0, y: showCard ? -200 : 0)
-                .animation(
-                    Animation
-                        .default
-                        .delay(0.1)
-                )
+            TitleView(showCard: showCard)
             
             BackCardView()
                 .frame(width: showCard ? 300 : 340.0, height: 220)
-                .background(show ? Color("card3") : Color("card4"))
+                .background(Color("card4"))
                 .cornerRadius(20)
                 .shadow(radius: 20)
-                .offset(x: 0, y: show ? -400 : -40)
+                .offset(x: 0, y: -40)
                 .offset(x: viewState.width, y: viewState.height )
-                .offset(y: showCard ? -180 : 0)
+                .offset(y: showCard ? -160 : 0)
                 .scaleEffect(0.9)
-                .rotationEffect(.degrees(show ? 0 : 12))
+                .rotationEffect(.degrees(12))
                 .rotationEffect(.degrees(showCard ? -12 : 0))
                 .rotation3DEffect(Angle(degrees: showCard ? 0 : 10), axis: (
                     x: 10.0, y: 0, z: 0
@@ -45,41 +36,26 @@ struct ContentView: View {
                 .animation(.easeInOut(duration: 0.4))
 
             BackCardView()
-                .frame(width: showCard ? 375 : 340.0, height: 220)
-                .background(show ? Color("card4") : Color("card3"))
+                .frame(width: showCard ? 350 : 340.0, height: 220)
+                .background(Color("card3"))
                 .cornerRadius(20)
                 .shadow(radius: 20)
-                .offset(x: 0, y: show ? -200 : -30)
+                .offset(x: 0, y: -20)
                 .offset(x: viewState.width, y: viewState.height )
                 .offset(y: showCard ? -140 : 0)
                 .scaleEffect(0.9)
-                .rotationEffect(.degrees(show ? 0 : 5))
+                .rotationEffect(.degrees(5))
                 .rotationEffect(.degrees(showCard ? -5 : 0))
                 .rotation3DEffect(Angle(degrees: showCard ? 0 : 5), axis: (
                     x: 10.0, y: 0, z: 0
                 ))
                 .blendMode(.hardLight)
+                .animation(.easeInOut(duration: 0.4))
 
-            CardView()
-                .frame(width: showCard ? 375 : 340, height: 220)
-                .background(.black)
-                .clipShape(
-                    RoundedRectangle(cornerRadius: showCard ? 30 : 20, style: .continuous)
-                )
-                .shadow(radius: 20)
-                .blendMode(.hardLight)
-                .offset(x: viewState.width, y: viewState.height )
-                .offset(x: 0, y: showCard ? -100 : 0)
+            CardView(showCard: showCard, viewState: viewState)
                 .onTapGesture {
                     showCard.toggle()
                 }
-                .animation(
-                    .spring(
-                        response: 0.5,
-                        dampingFraction: 0.5,
-                        blendDuration: 0.9
-                    )
-                )
                 .gesture(
                     DragGesture()
                         .onChanged {value in
@@ -90,11 +66,7 @@ struct ContentView: View {
                         })
                 )
             
-            BottomCardView()
-                .offset(x: 0, y: showCard ? 360 : 1000 )
-                .offset(y: bottomCardState.height)
-                .blur(radius: show ? 20 : 0)
-                .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
+            BottomCardView(showCard: showCard, bottomCardState: bottomCardState, showFull: showFull)
                 .gesture(
                     DragGesture()
                         .onChanged { value in
@@ -123,9 +95,7 @@ struct ContentView: View {
                             }
                         }
                 )
-    
         }
-        .animation(.easeInOut(duration: 0.35))
     }
 }
 
@@ -136,6 +106,9 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct TitleView: View {
+    
+    var showCard: Bool
+    
     var body: some View {
         VStack {
             HStack {
@@ -150,10 +123,21 @@ struct TitleView: View {
             Image("Background1")
             Spacer()
         }
+        .opacity(showCard ? 0.2 : 1)
+        .offset(x: 0, y: showCard ? -200 : 0)
+        .animation(
+            Animation
+                .default
+                .delay(0.1)
+        )
     }
 }
 
 struct CardView: View {
+    
+    var showCard: Bool
+    var viewState: CGSize
+    
     var body: some View {
         VStack {
             HStack {
@@ -179,6 +163,22 @@ struct CardView: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 300, height: 110, alignment: .top)
         }
+        .frame(width: showCard ? 375 : 340, height: 220)
+        .background(.black)
+        .clipShape(
+            RoundedRectangle(cornerRadius: showCard ? 30 : 20, style: .continuous)
+        )
+        .shadow(radius: 20)
+        .blendMode(.hardLight)
+        .offset(x: viewState.width, y: viewState.height )
+        .offset(x: 0, y: showCard ? -100 : 0)
+        .animation(
+            .spring(
+                response: 0.5,
+                dampingFraction: 0.5,
+                blendDuration: 0.9
+            )
+        )
     }
 }
 
@@ -187,11 +187,15 @@ struct BackCardView: View {
         VStack {
             Spacer()
         }
-
     }
 }
 
 struct BottomCardView: View {
+    
+    var showCard: Bool
+    var bottomCardState: CGSize
+    var showFull: Bool
+    
     var body: some View {
         VStack {
             Rectangle()
@@ -211,6 +215,8 @@ struct BottomCardView: View {
         .background(.white)
         .cornerRadius(30)
         .shadow(radius: 20)
-        
+        .offset(x: 0, y: showCard ? 360 : 1000 )
+        .offset(y: bottomCardState.height)
+        .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
     }
 }
