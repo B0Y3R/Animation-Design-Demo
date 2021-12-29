@@ -13,18 +13,46 @@ struct MenuView: View {
             Spacer()
             
             VStack(spacing: 16) {
+                Text("James - 28% complete")
+                    .font(.caption)
+                
+                Color.white// Color counts as a view
+                    .frame(width: 38, height: 6) // set inner progress bar frame
+                    .cornerRadius(3)             // set corder radius of innerProgressBarFrame
+                    .frame(width:130, height: 6, alignment: .leading) // set outer progressBar frame
+                    .background(Color.black.opacity(0.08)) // set color of outer progressBar frame
+                    .cornerRadius(3)
+                    .padding()
+                    .frame(width: 150, height: 24)
+                    .background(Color.black.opacity(0.1))
+                    .cornerRadius(12)
+                    .shadow(radius: 20)
+                
+                
                 MenuRow(title:"Account", iconName: "gear")
                 MenuRow(title:"Billing", iconName: "creditcard")
-                MenuRow(title:"Account", iconName: "person.crop.circle")
+                MenuRow(title:"Sign out", iconName: "person.crop.circle")
             }
             .frame(maxWidth: .infinity)
             .frame(height: 300)
-            .background(Color.white)
+            .background(
+                LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0.7882352941, green: 0.8941176471, blue: 0.9450980392, alpha: 1))]), startPoint: .top, endPoint: .bottomTrailing)
+            )
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-            .shadow(radius: 30)
+            .shadow(color: Color.blue.opacity(0.2), radius: 20, x: 0, y: 20)
             .padding(.horizontal, 30)
+            .overlay(
+                Image("Avatar")
+                    .resizable()
+                    .aspectRatio( contentMode: .fill)
+                    .frame(width: 60, height: 60)
+                    .clipShape(Circle())
+                    .offset(y: -150)
+            )
         }
+        
         .padding(.bottom, 30)
+
     }
 }
 
@@ -47,6 +75,7 @@ struct MenuRow: View {
                 .font(.system(size: size, weight: .light))
                 .imageScale(.large)
                 .frame(width: 32, height: 32)
+                .foregroundColor(Color("card1").opacity(0.5))
             Text(title)
                 .font(.system(size: size, weight: .bold, design: .default))
                 .frame(width: 120, alignment: .leading)
