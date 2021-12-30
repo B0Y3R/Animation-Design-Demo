@@ -17,10 +17,8 @@ struct HomeView: View {
         VStack {
             HStack {
                 Text("Watching")
-                    .font(.system(size: 28, weight: .bold))
-                
-                
-                
+                  .modifier(CustomFontModifier())
+
                 Spacer()
                 
                 AvatarView(showProfile: $showProfile)
@@ -46,31 +44,13 @@ struct HomeView: View {
             .padding(.leading, 14)
             .padding(.top, 30)
             
-            HStack(spacing: 12.0) {
-                RingView(
-                    show: .constant(true),
-                    color1: Color.purple,
-                    color2: Color.pink,
-                    size: 44,
-                    percent: 23,
-                    progressDuration: 0.1
-                )
-                VStack(alignment: .leading, spacing: 4.0) {
-                    Text("6 minutes left")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                    Text("Watched 10 mins today")
-                        .font(.caption)
-                }
+            ScrollView(.horizontal, showsIndicators: false) {
+                WatchRingsView()
+                    .padding(.horizontal, 30)
+                    .padding(.bottom, 25)
             }
-            .padding(8)
-            .background(Color.white)
-            .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
-            .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
             
             ScrollView(.horizontal, showsIndicators: false) {
-        
                 HStack(spacing: 15) {
                     ForEach(sectionData) { section in
                         GeometryReader { geometry in
@@ -87,7 +67,6 @@ struct HomeView: View {
                 .padding(30)
                 .padding(.bottom, 30)
             }
-    
             Spacer()
         }
     }
@@ -175,3 +154,92 @@ struct HomeView_Previews: PreviewProvider {
     }
 }
 
+
+struct WatchRingsView: View {
+    var body: some View {
+        HStack(spacing: 20) {
+            HStack(spacing: 12.0) {
+                RingView(
+                    show: .constant(true),
+                    color1: Color.purple,
+                    color2: Color.pink,
+                    size: 44,
+                    percent: 23,
+                    progressDuration: 0.1
+                )
+                VStack(alignment: .leading, spacing: 4.0) {
+                    Text("6 minutes left")
+                        .modifier(FontModifier(style: .subheadline))
+                    Text("Watched 10 mins today")
+                        .modifier(FontModifier(style: .caption))
+                }
+            }
+            .padding(8)
+            .background(Color.white)
+            .cornerRadius(20)
+            .modifier(ShadowModifier())
+            
+            HStack(spacing: 12.0) {
+                RingView(
+                    show: .constant(true),
+                    size: 44,
+                    percent: 90,
+                    progressDuration: 0.1
+                )
+            }
+            .padding(8)
+            .background(Color.white)
+            .cornerRadius(20)
+            .modifier(ShadowModifier())
+            
+            HStack(spacing: 12.0) {
+                RingView(
+                    show: .constant(true),
+                    color1: Color.green,
+                    color2: Color.blue,
+                    size: 44,
+                    percent: 44,
+                    progressDuration: 0.1
+                )
+            }
+            .padding(8)
+            .background(Color.white)
+            .cornerRadius(20)
+            .modifier(ShadowModifier())
+            
+            
+            HStack(spacing: 12.0) {
+                RingView(
+                    show: .constant(true),
+                    color1: Color.orange,
+                    color2: Color.red,
+                    size: 44,
+                    percent: 83,
+                    progressDuration: 0.1
+                )
+            }
+            .padding(8)
+            .background(Color.white)
+            .cornerRadius(20)
+            .modifier(ShadowModifier())
+            
+            HStack(spacing: 12.0) {
+                RingView(
+                    show: .constant(true),
+                    color1: Color.yellow,
+                    color2: Color.green,
+                    size: 44,
+                    percent: 83,
+                    progressDuration: 0.1
+                )
+            }
+            .padding(8)
+            .background(Color.white)
+            .cornerRadius(20)
+            .modifier(ShadowModifier())
+            
+            
+            
+        }
+    }
+}
