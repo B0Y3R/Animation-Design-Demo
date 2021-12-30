@@ -8,25 +8,35 @@
 import SwiftUI
 
 struct RingView: View {
+    
+    var color1: Color = Color.red
+    var color2: Color = Color.orange
+    var size: CGFloat = 60
+    var percent: CGFloat = 88.0
+    
     var body: some View {
-        ZStack {
+        
+        let multiplier = size / 44
+        let progress = (100 - percent) / 100
+        
+        return ZStack {
             Circle()
                 .stroke(
                     Color.black.opacity(0.1),
-                    style: StrokeStyle(lineWidth: 5)
-                    )
-                .frame(width: 44, height: 44)
+                    style: StrokeStyle(lineWidth: 5 * multiplier)
+                )
+                .frame(width: size, height: size)
             
             Circle()
-                .trim(from: 0.2, to: 1)
+                .trim(from: progress, to: 1)
                 .stroke(
                     LinearGradient(
-                        gradient: Gradient(colors: [Color(#colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)), Color(#colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1))]),
+                        gradient: Gradient(colors: [color1, color2]),
                         startPoint: .topTrailing,
                         endPoint: .topLeading
                     ),
                     style: StrokeStyle(
-                        lineWidth: 5,
+                        lineWidth: 5 * multiplier,
                         lineCap: .round,
                         lineJoin: .round,
                         miterLimit: .infinity,
@@ -39,14 +49,14 @@ struct RingView: View {
                     Angle(degrees: 180),
                     axis: (x: 1, y:0, z: 0)
                 )
-                .frame(width: 44, height: 44)
+                .frame(width: size, height: size)
                 .shadow(
-                    color: Color.orange.opacity(0.8),
-                    radius: 3, x: 0, y: 3
+                    color: color1.opacity(0.8),
+                    radius: 3 * multiplier, x: 0, y: 3 * multiplier
                 )
             
-            Text("82%")
-                .font(.subheadline)
+            Text("\(Int(percent))%")
+                .font(.system(size: 14 * multiplier))
                 .fontWeight(.bold)
         }
     }
