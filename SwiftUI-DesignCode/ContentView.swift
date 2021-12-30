@@ -50,7 +50,7 @@ struct ContentView: View {
                     x: 10.0, y: 0, z: 0
                 ))
                 .blendMode(.hardLight)
-                .animation(.easeInOut(duration: 0.4))
+                .animation(.easeInOut(duration: 0.3))
 
             CardView(showCard: showCard, viewState: viewState)
                 .onTapGesture {
@@ -66,7 +66,10 @@ struct ContentView: View {
                         })
                 )
             
-            BottomCardView(showCard: showCard, bottomCardState: bottomCardState, showFull: showFull)
+            BottomCardView(show: $showCard )
+                .offset(x: 0, y: showCard ? 360 : 1000 )
+                .offset(y: bottomCardState.height)
+                .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
                 .gesture(
                     DragGesture()
                         .onChanged { value in
@@ -192,12 +195,10 @@ struct BackCardView: View {
 
 struct BottomCardView: View {
     
-    var showCard: Bool
-    var bottomCardState: CGSize
-    var showFull: Bool
+    @Binding var show: Bool
     
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Rectangle()
                 .frame(width: 40, height: 4)
                 .cornerRadius(3)
@@ -207,16 +208,35 @@ struct BottomCardView: View {
                 .multilineTextAlignment(.center)
                 .font(.subheadline)
                 .lineSpacing(4)
+            
+            HStack(spacing: 20) {
+                RingView(
+                    show: $show,
+                    size: 88,
+                    percent: 90
+                )
+                
+                VStack {
+                    Text("SwiftUI")
+                    Text("12 of 12 sections completed\n10 hours spent so far")
+                        .font(.footnote )
+                        .foregroundColor(.gray)
+                        .lineSpacing(4)
+                }
+                .padding(20)
+                .background(Color.white)
+                .cornerRadius(20)
+                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
+                
+            }
+            
             Spacer()
         }
         .padding(.top, 8)
         .padding(.horizontal, 20)
-        .frame(maxWidth: .infinity, maxHeight: 750)
+        .frame(maxWidth: .infinity)
         .background(.white)
         .cornerRadius(30)
         .shadow(radius: 20)
-        .offset(x: 0, y: showCard ? 360 : 1000 )
-        .offset(y: bottomCardState.height)
-        .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
     }
 }

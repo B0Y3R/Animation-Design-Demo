@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct RingView: View {
+
+    @Binding var show: Bool
     
     var color1: Color = Color.red
     var color2: Color = Color.orange
-    var size: CGFloat = 60
+    var size: CGFloat = 150
     var percent: CGFloat = 88.0
+    var progressDuration: CGFloat = 0.3
+
     
     var body: some View {
         
@@ -28,7 +32,7 @@ struct RingView: View {
                 .frame(width: size, height: size)
             
             Circle()
-                .trim(from: progress, to: 1)
+                .trim(from: show ? progress : 1 , to: 1)
                 .stroke(
                     LinearGradient(
                         gradient: Gradient(colors: [color1, color2]),
@@ -44,6 +48,7 @@ struct RingView: View {
                         dashPhase: 0
                     )
                 )
+                .animation(Animation.easeInOut.delay(0.3))
                 .rotationEffect(Angle(degrees: 90))
                 .rotation3DEffect(
                     Angle(degrees: 180),
@@ -54,6 +59,7 @@ struct RingView: View {
                     color: color1.opacity(0.8),
                     radius: 3 * multiplier, x: 0, y: 3 * multiplier
                 )
+
             
             Text("\(Int(percent))%")
                 .font(.system(size: 14 * multiplier))
@@ -64,6 +70,6 @@ struct RingView: View {
 
 struct RingView_Previews: PreviewProvider {
     static var previews: some View {
-        RingView()
+        RingView(show: .constant(true))
     }
 }

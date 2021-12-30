@@ -27,7 +27,6 @@ struct TabBar: View {
 
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
-        TabBar().previewDevice("iPhone 8")
         TabBar().previewDevice("iPhone 13")
     }
 }
