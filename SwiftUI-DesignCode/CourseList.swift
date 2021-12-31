@@ -11,7 +11,7 @@ struct CourseList: View {
     @State var courses = courseData
     @State var active: Bool = false
     @State var activeIndex: Int = -1
-    
+ 
     var body: some View {
         ZStack {
             Color.black.opacity(active ? 0.5 : 0)
@@ -77,6 +77,9 @@ var courseData = [
 ]
 
 struct CourseView: View {
+    
+    @State var activeView: CGSize = CGSize.zero
+    
     @Binding var show: Bool
     @Binding var active: Bool
     @Binding var activeIndex: Int
@@ -85,19 +88,20 @@ struct CourseView: View {
     var course: Course
     
     var body: some View {
+        
         ZStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 20) {
                 Text("Take you SwiftUI App to the app Store with advanced techniques like API data, packages and CMS")
-                
+
                 Text("About this course")
                     .font(.title).bold()
-                
+
                 Text("This course is unlike any other. We care about design and want to make sure that you get better at it in the process. It was written for designers and developers who are passionate about collaborating and buildg real apps for Ios and macOS. While it's not on codebase for all apps, you learn once and can apply the techniques and crontrols to all platforms with incredible quality, consistency  and performance. It's beginner-friendly, but it's also packed with design tricks and efficient workflows for building great user interfaces and interactions.")
-                
+
                 Text("Minial coding experience required, such as in HTML and CSS. Please not tht Xcode 11 and Catalina are essential. Once you get everthing installed, it'll get a lot freindlier! I added a bunch of troubleshoots at the end if this page to help you navigate the issues you might encounter.")
             }
             .padding(30)
-            .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? .infinity : 280 )
+            .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? .infinity : 380 )
             .offset(y: show ? 460 : 0)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
@@ -150,8 +154,22 @@ struct CourseView: View {
                     activeIndex = -1
                 }
             }
+            
+            if show {
+                CourseDetail(
+                    course: course,
+                    show: $show,
+                    active: $active,
+                    activeIndex: $activeIndex
+                )
+                    .background(Color.white)
+                    .animation(nil)
+            }
+            
         }
         .frame(height: show ? screen.height : 280)
+        .contentShape(Rectangle())
+        .scaleEffect(1 - activeView.height / 100)
         .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.2))
         .edgesIgnoringSafeArea(.all)
     }

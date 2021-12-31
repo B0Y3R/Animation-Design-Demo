@@ -22,6 +22,7 @@
 		7DBCEEE0277E5B35008EE18D /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEDF277E5B35008EE18D /* Modifiers.swift */; };
 		7DBCEEE2277E5D65008EE18D /* Pushster in Resources */ = {isa = PBXBuildFile; fileRef = 7DBCEEE1277E5D65008EE18D /* Pushster */; };
 		7DBCEEE5277E69F4008EE18D /* CourseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEE4277E69F4008EE18D /* CourseList.swift */; };
+		7DBCEEE7277E90A6008EE18D /* CourseDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEE6277E90A6008EE18D /* CourseDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		7DBCEEE1277E5D65008EE18D /* Pushster */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Pushster; sourceTree = "<group>"; };
 		7DBCEEE3277E5D95008EE18D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7DBCEEE4277E69F4008EE18D /* CourseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseList.swift; sourceTree = "<group>"; };
+		7DBCEEE6277E90A6008EE18D /* CourseDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				7DBCEED1277CFDCF008EE18D /* Home.swift */,
 				7DBCEED3277D1468008EE18D /* HomeView.swift */,
 				7DBCEEE4277E69F4008EE18D /* CourseList.swift */,
+				7DBCEEE6277E90A6008EE18D /* CourseDetail.swift */,
 				7DBCEECF277CE1F9008EE18D /* MenuView.swift */,
 				7DBCEED5277D285F008EE18D /* UpdateList.swift */,
 				7DBCEED7277E2919008EE18D /* UpdateDetail.swift */,
@@ -183,6 +186,7 @@
 				7DBCEED6277D285F008EE18D /* UpdateList.swift in Sources */,
 				7DBCEEDA277E2C53008EE18D /* UpdateStore.swift in Sources */,
 				7DBCEED2277CFDCF008EE18D /* Home.swift in Sources */,
+				7DBCEEE7277E90A6008EE18D /* CourseDetail.swift in Sources */,
 				7DBCEED4277D1468008EE18D /* HomeView.swift in Sources */,
 				7D680E6C277BE395005B13A5 /* SwiftUI_DesignCodeApp.swift in Sources */,
 			);
