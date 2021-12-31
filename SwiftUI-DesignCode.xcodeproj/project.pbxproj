@@ -25,6 +25,7 @@
 		7DBCEEE7277E90A6008EE18D /* CourseDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEE6277E90A6008EE18D /* CourseDetail.swift */; };
 		7DBCEEE9277F9FE9008EE18D /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEE8277F9FE9008EE18D /* Data.swift */; };
 		7DBCEEEB277FA17D008EE18D /* PostList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEEA277FA17D008EE18D /* PostList.swift */; };
+		7DBCEEED277FA4F6008EE18D /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEEC277FA4F6008EE18D /* DataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		7DBCEEE6277E90A6008EE18D /* CourseDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetail.swift; sourceTree = "<group>"; };
 		7DBCEEE8277F9FE9008EE18D /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		7DBCEEEA277FA17D008EE18D /* PostList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostList.swift; sourceTree = "<group>"; };
+		7DBCEEEC277FA4F6008EE18D /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				7DBCEED7277E2919008EE18D /* UpdateDetail.swift */,
 				7DBCEED9277E2C53008EE18D /* UpdateStore.swift */,
 				7DBCEEE8277F9FE9008EE18D /* Data.swift */,
+				7DBCEEEC277FA4F6008EE18D /* DataStore.swift */,
 				7DBCEEEA277FA17D008EE18D /* PostList.swift */,
 				7DBCEEDB277E3AE5008EE18D /* TabBar.swift */,
 				7D680E6F277BE396005B13A5 /* Assets.xcassets */,
@@ -183,6 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DBCEEDE277E3F1D008EE18D /* RingView.swift in Sources */,
+				7DBCEEED277FA4F6008EE18D /* DataStore.swift in Sources */,
 				7DBCEEEB277FA17D008EE18D /* PostList.swift in Sources */,
 				7DBCEEE0277E5B35008EE18D /* Modifiers.swift in Sources */,
 				7DBCEEDC277E3AE6008EE18D /* TabBar.swift in Sources */,
