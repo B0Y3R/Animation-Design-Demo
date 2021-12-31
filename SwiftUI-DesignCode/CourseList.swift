@@ -8,23 +8,30 @@
 import SwiftUI
 
 struct CourseList: View {
-    @State var show: Bool = false
-    @State var show2: Bool = false
+    @State var courses = courseData
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 30) {
-                CourseView(show: $show)
-                GeometryReader { geometry in
-                    CourseView(show: $show2)
-                        .offset(y: show2 ? -geometry.frame(in: .global).minY : 0)
+                Text("Courses")
+                    .font(.largeTitle)
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 30)
+                    .padding(.top, 30)
+                ForEach(courses.indices, id: \.self) { index in
+                    GeometryReader { geometry in
+                        CourseView(show: $courses[index].show, course: courses[index])
+                            .offset(y: courses[index].show ? -geometry.frame(in: .global).minY : 0)
+                    }
+                    .frame(height: 280)
+                    .frame(maxWidth: courses[index].show ? .infinity : screen.width - 60, alignment: .center)
                 }
-                .frame(height: show2 ? screen.height : 280)
-                .frame(maxWidth: show2 ? .infinity : screen.width - 60, alignment: .center)
 
             }
             .frame(width: screen.width)
+            .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
         }
-        
     }
 }
 
@@ -34,8 +41,26 @@ struct CourseList_Previews: PreviewProvider {
     }
 }
 
+struct Course: Identifiable {
+    var id = UUID()
+    var title: String
+    var subtitle: String
+    var image: Image
+    var logo: Image
+    var color: UIColor
+    var show: Bool
+}
+
+var courseData = [
+    Course(title: "Prototype Designs in SwiftUI", subtitle: "18 Sections", image: Image("Card1"), logo: Image("Logo2"), color: .blue, show: false),
+    Course(title: "SwiftUI Advanced", subtitle: "20 Sections", image: Image("Card2"), logo: Image("Logo1"), color: .red, show: false),
+    Course(title: "UI Design for Developers", subtitle: "23 Sections", image: Image("Card3"), logo: Image("Logo3"), color: .green, show: false)
+]
+
 struct CourseView: View {
     @Binding var show: Bool
+    
+    var course: Course
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -56,24 +81,21 @@ struct CourseView: View {
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
             .opacity(show ? 1 : 0)
-
-            
-            
             
             VStack {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 8.0) {
-                        Text("SwiftUI Advanced")
+                        Text(course.title)
                             .font(.system(size: 24, weight: .bold))
                             .foregroundColor(.white)
-                        Text("20 Sections")
+                        Text(course.subtitle)
                             .foregroundColor(Color.white.opacity(0.7))
                     }
                     
                     Spacer()
                     
                     ZStack {
-                        Image("Logo1")
+                        course.logo
                             .opacity(show ? 0 : 1)
                         Image(systemName: "xmark")
                             .frame(width: 40, height: 40)
@@ -84,7 +106,7 @@ struct CourseView: View {
                     }
                 }
                 Spacer()
-                Image("Card1")
+                course.image
                     .resizable()
                     .aspectRatio(contentMode:.fit)
                     .frame(maxWidth: .infinity)
@@ -93,14 +115,16 @@ struct CourseView: View {
             .padding(show ? 30 : 20)
             .padding(.top, show ? 30 : 0)
             .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? 460 : 280)
-            .background(.purple)
+            .background(Color(course.color))
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .shadow(color: Color.purple.opacity(0.3), radius: 20, x: 0, y: 20)
             .onTapGesture {
                 show.toggle()
             }
         }
+        .frame(height: show ? screen.height : 280)
         .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.2))
         .edgesIgnoringSafeArea(.all)
     }
 }
+
