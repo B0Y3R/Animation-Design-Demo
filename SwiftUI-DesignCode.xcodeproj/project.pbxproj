@@ -23,6 +23,8 @@
 		7DBCEEE2277E5D65008EE18D /* Pushster in Resources */ = {isa = PBXBuildFile; fileRef = 7DBCEEE1277E5D65008EE18D /* Pushster */; };
 		7DBCEEE5277E69F4008EE18D /* CourseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEE4277E69F4008EE18D /* CourseList.swift */; };
 		7DBCEEE7277E90A6008EE18D /* CourseDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEE6277E90A6008EE18D /* CourseDetail.swift */; };
+		7DBCEEE9277F9FE9008EE18D /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEE8277F9FE9008EE18D /* Data.swift */; };
+		7DBCEEEB277FA17D008EE18D /* PostList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEEA277FA17D008EE18D /* PostList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		7DBCEEE3277E5D95008EE18D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7DBCEEE4277E69F4008EE18D /* CourseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseList.swift; sourceTree = "<group>"; };
 		7DBCEEE6277E90A6008EE18D /* CourseDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetail.swift; sourceTree = "<group>"; };
+		7DBCEEE8277F9FE9008EE18D /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		7DBCEEEA277FA17D008EE18D /* PostList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 				7DBCEED5277D285F008EE18D /* UpdateList.swift */,
 				7DBCEED7277E2919008EE18D /* UpdateDetail.swift */,
 				7DBCEED9277E2C53008EE18D /* UpdateStore.swift */,
+				7DBCEEE8277F9FE9008EE18D /* Data.swift */,
+				7DBCEEEA277FA17D008EE18D /* PostList.swift */,
 				7DBCEEDB277E3AE5008EE18D /* TabBar.swift */,
 				7D680E6F277BE396005B13A5 /* Assets.xcassets */,
 				7DBCEEE1277E5D65008EE18D /* Pushster */,
@@ -177,12 +183,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DBCEEDE277E3F1D008EE18D /* RingView.swift in Sources */,
+				7DBCEEEB277FA17D008EE18D /* PostList.swift in Sources */,
 				7DBCEEE0277E5B35008EE18D /* Modifiers.swift in Sources */,
 				7DBCEEDC277E3AE6008EE18D /* TabBar.swift in Sources */,
 				7DBCEED8277E2919008EE18D /* UpdateDetail.swift in Sources */,
 				7DBCEEE5277E69F4008EE18D /* CourseList.swift in Sources */,
 				7D680E6E277BE395005B13A5 /* ContentView.swift in Sources */,
 				7DBCEED0277CE1F9008EE18D /* MenuView.swift in Sources */,
+				7DBCEEE9277F9FE9008EE18D /* Data.swift in Sources */,
 				7DBCEED6277D285F008EE18D /* UpdateList.swift in Sources */,
 				7DBCEEDA277E2C53008EE18D /* UpdateStore.swift in Sources */,
 				7DBCEED2277CFDCF008EE18D /* Home.swift in Sources */,

@@ -75,19 +75,7 @@ struct HomeView: View {
                 }
                 .offset(y: -30)
                 
-                HStack {
-                    Text("Courses")
-                        .font(.title)
-                    .bold()
-                    Spacer()
-                }
-                .padding(.leading, 30)
-                .offset(y: -60)
-                
-                SectionView(
-                    section: sectionData[2],
-                    width: screen.width - 60
-                )
+                CourseList()
                 .offset(y: -60)
                 
                 Spacer()
