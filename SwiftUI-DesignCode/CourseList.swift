@@ -10,7 +10,7 @@ import SwiftUI
 struct CourseList: View {
     @State var courses = courseData
     @State var active: Bool = false
-
+    @State var activeIndex: Int = -1
     
     var body: some View {
         ZStack {
@@ -29,8 +29,17 @@ struct CourseList: View {
                     
                     ForEach(courses.indices, id: \.self) { index in
                         GeometryReader { geometry in
-                            CourseView(show: $courses[index].show, active: $active, course: courses[index])
-                                .offset(y: courses[index].show ? -geometry.frame(in: .global).minY : 0)
+                            CourseView(
+                                show: $courses[index].show,
+                                active: $active,
+                                activeIndex: $activeIndex,
+                                index: index,
+                                course: courses[index]
+                            )
+                            .offset(y: courses[index].show ? -geometry.frame(in: .global).minY : 0)
+                            .opacity(activeIndex != index && active ? 0 : 1)
+                            .scaleEffect(activeIndex != index && active ? 0 : 1)
+                            .offset(x: activeIndex != index && active ? screen.width : 0)
                         }
                         .frame(height: 280)
                         .frame(maxWidth: courses[index].show ? .infinity : screen.width - 60, alignment: .center)
@@ -70,7 +79,9 @@ var courseData = [
 struct CourseView: View {
     @Binding var show: Bool
     @Binding var active: Bool
+    @Binding var activeIndex: Int
     
+    var index: Int
     var course: Course
     
     var body: some View {
@@ -132,6 +143,12 @@ struct CourseView: View {
             .onTapGesture {
                 show.toggle()
                 active.toggle()
+                
+                if show {
+                    activeIndex = index
+                } else {
+                    activeIndex = -1
+                }
             }
         }
         .frame(height: show ? screen.height : 280)
