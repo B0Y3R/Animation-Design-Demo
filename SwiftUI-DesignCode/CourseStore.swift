@@ -33,6 +33,8 @@ func getArray(id: String, completion: @escaping([Entry]) -> ()) {
 class CourseStore: ObservableObject {
     @Published var courses: [Course] = courseData
     
+    let colors: [Color] = [Color(.purple), Color(.green), Color(.red), Color(.blue), Color(.brown)]
+    
     init() {
         getArray(id: "course") { (items) in
             items.forEach { (item) in
@@ -40,9 +42,9 @@ class CourseStore: ObservableObject {
                     Course(
                         title: item.fields["title"] as! String,
                         subtitle: item.fields["subtitle"] as! String,
-                        image: Image("Card1"),
+                        image: item.fields.linkedAsset(at: "image")?.url ?? URL(string: "")!,
                         logo: Image("Logo1"),
-                        color: .purple,
+                        color: self.colors.randomElement()!,
                         show: false
                     )
                 )

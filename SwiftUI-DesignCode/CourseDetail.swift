@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct CourseDetail: View {
     var course: Course
@@ -43,7 +44,7 @@ struct CourseDetail: View {
                         }
                     }
                     Spacer()
-                    course.image
+                    WebImage(url: course.image)
                         .resizable()
                         .aspectRatio(contentMode:.fit)
                         .frame(maxWidth: .infinity)
@@ -52,7 +53,7 @@ struct CourseDetail: View {
                 .padding(show ? 30 : 20)
                 .padding(.top, show ? 30 : 0)
                 .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? 460 : 280)
-                .background(Color(course.color))
+                .background(course.color)
                 .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
                 .shadow(color: Color.purple.opacity(0.3), radius: 20, x: 0, y: 20)
                 

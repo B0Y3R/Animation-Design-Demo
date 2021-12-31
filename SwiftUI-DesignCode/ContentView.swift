@@ -235,7 +235,7 @@ struct BottomCardView: View {
         .padding(.top, 8)
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity)
-        .background(.white)
+        .background(BlurView(style: .systemUltraThinMaterial)) // system material will help you with dark mode / light mode
         .cornerRadius(30)
         .shadow(radius: 20)
     }

@@ -28,6 +28,8 @@
 		7DBCEEED277FA4F6008EE18D /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEEC277FA4F6008EE18D /* DataStore.swift */; };
 		7DBCEEF0277FA88D008EE18D /* Contentful in Frameworks */ = {isa = PBXBuildFile; productRef = 7DBCEEEF277FA88D008EE18D /* Contentful */; };
 		7DBCEEF2277FAB2C008EE18D /* CourseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEF1277FAB2C008EE18D /* CourseStore.swift */; };
+		7DBCEEF5277FB490008EE18D /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7DBCEEF4277FB490008EE18D /* SDWebImageSwiftUI */; };
+		7DBCEEFB277FBDDD008EE18D /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCEEFA277FBDDD008EE18D /* BlurView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,7 @@
 		7DBCEEEA277FA17D008EE18D /* PostList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostList.swift; sourceTree = "<group>"; };
 		7DBCEEEC277FA4F6008EE18D /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		7DBCEEF1277FAB2C008EE18D /* CourseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStore.swift; sourceTree = "<group>"; };
+		7DBCEEFA277FBDDD008EE18D /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DBCEEF5277FB490008EE18D /* SDWebImageSwiftUI in Frameworks */,
 				7DBCEEF0277FA88D008EE18D /* Contentful in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,6 +96,7 @@
 				7DBCEEDD277E3F1D008EE18D /* RingView.swift */,
 				7DBCEEDF277E5B35008EE18D /* Modifiers.swift */,
 				7DBCEED1277CFDCF008EE18D /* Home.swift */,
+				7DBCEEFA277FBDDD008EE18D /* BlurView.swift */,
 				7DBCEED3277D1468008EE18D /* HomeView.swift */,
 				7DBCEEE4277E69F4008EE18D /* CourseList.swift */,
 				7DBCEEF1277FAB2C008EE18D /* CourseStore.swift */,
@@ -137,6 +142,7 @@
 			name = "SwiftUI-DesignCode";
 			packageProductDependencies = (
 				7DBCEEEF277FA88D008EE18D /* Contentful */,
+				7DBCEEF4277FB490008EE18D /* SDWebImageSwiftUI */,
 			);
 			productName = "SwiftUI-DesignCode";
 			productReference = 7D680E68277BE395005B13A5 /* SwiftUI-DesignCode.app */;
@@ -168,6 +174,7 @@
 			mainGroup = 7D680E5F277BE395005B13A5;
 			packageReferences = (
 				7DBCEEEE277FA88D008EE18D /* XCRemoteSwiftPackageReference "contentful.swift" */,
+				7DBCEEF3277FB490008EE18D /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 7D680E69277BE395005B13A5 /* Products */;
 			projectDirPath = "";
@@ -201,6 +208,7 @@
 				7DBCEEEB277FA17D008EE18D /* PostList.swift in Sources */,
 				7DBCEEE0277E5B35008EE18D /* Modifiers.swift in Sources */,
 				7DBCEEDC277E3AE6008EE18D /* TabBar.swift in Sources */,
+				7DBCEEFB277FBDDD008EE18D /* BlurView.swift in Sources */,
 				7DBCEED8277E2919008EE18D /* UpdateDetail.swift in Sources */,
 				7DBCEEE5277E69F4008EE18D /* CourseList.swift in Sources */,
 				7DBCEEF2277FAB2C008EE18D /* CourseStore.swift in Sources */,
@@ -427,6 +435,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		7DBCEEF3277FB490008EE18D /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -434,6 +450,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7DBCEEEE277FA88D008EE18D /* XCRemoteSwiftPackageReference "contentful.swift" */;
 			productName = Contentful;
+		};
+		7DBCEEF4277FB490008EE18D /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7DBCEEF3277FB490008EE18D /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

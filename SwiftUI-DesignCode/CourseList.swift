@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct CourseList: View {
     @ObservedObject var store = CourseStore()
@@ -50,7 +51,13 @@ struct CourseList: View {
 
                 }
                 .frame(width: screen.width)
-                .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
+                .animation(
+                    .spring(
+                        response: 0.5,
+                        dampingFraction: 0.6,
+                        blendDuration: 0
+                    )
+                )
             }
         }
     }
@@ -66,16 +73,37 @@ struct Course: Identifiable {
     var id = UUID()
     var title: String
     var subtitle: String
-    var image: Image
+    var image: URL
     var logo: Image
-    var color: UIColor
+    var color: Color
     var show: Bool
 }
 
 var courseData = [
-    Course(title: "Prototype Designs in SwiftUI", subtitle: "18 Sections", image: Image("Card1"), logo: Image("Logo2"), color: .blue, show: false),
-    Course(title: "SwiftUI Advanced", subtitle: "20 Sections", image: Image("Card2"), logo: Image("Logo1"), color: .red, show: false),
-    Course(title: "UI Design for Developers", subtitle: "23 Sections", image: Image("Card3"), logo: Image("Logo3"), color: .green, show: false)
+    Course(
+        title: "Prototype Designs in SwiftUI",
+        subtitle: "18 Sections",
+        image: URL(string: "https://www.dropbox.com/preview/URL%20Images/Card1%402x.png?context=browse&role=personal")!,
+        logo: Image("Logo2"),
+        color: .blue,
+        show: false
+    ),
+    Course(
+        title: "SwiftUI Advanced",
+        subtitle: "20 Sections",
+        image: URL(string: "https://dl.dropbox.com/preview/URL%20Images/Card2%402x.png?context=browse&role=personal")!,
+        logo: Image("Logo1"),
+        color: .red,
+        show: false
+    ),
+    Course(
+        title: "UI Design for Developers",
+        subtitle: "23 Sections",
+        image:  URL(string: "https://dl.dropbox.com/preview/URL%20Images/Card3%402x.png?context=browse&role=personal")!,
+        logo: Image("Logo3"),
+        color: .green,
+        show: false
+    )
 ]
 
 struct CourseView: View {
@@ -134,7 +162,7 @@ struct CourseView: View {
                     }
                 }
                 Spacer()
-                course.image
+                WebImage(url: course.image)
                     .resizable()
                     .aspectRatio(contentMode:.fit)
                     .frame(maxWidth: .infinity)
@@ -143,7 +171,7 @@ struct CourseView: View {
             .padding(show ? 30 : 20)
             .padding(.top, show ? 30 : 0)
             .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? 460 : 280)
-            .background(Color(course.color))
+            .background(course.color)
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .shadow(color: Color.purple.opacity(0.3), radius: 20, x: 0, y: 20)
             .onTapGesture {
