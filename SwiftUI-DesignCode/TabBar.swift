@@ -18,7 +18,7 @@ struct TabBar: View {
             ContentView()
                 .tabItem {
                     Image(systemName: "rectangle.stack.fill")
-                    Text("Certificates")
+                    Text("Courses")
                 }
         }
         .edgesIgnoringSafeArea(.top)
@@ -27,6 +27,8 @@ struct TabBar: View {
 
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
-        TabBar().previewDevice("iPhone 13")
+        TabBar()
+            .previewDevice("iPhone 13")
+            .preferredColorScheme(.dark)
     }
 }

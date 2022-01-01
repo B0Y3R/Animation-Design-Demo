@@ -34,7 +34,7 @@ struct CourseDetail: View {
                             Image(systemName: "xmark")
                                 .frame(width: 40, height: 40)
                                 .background(.black)
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                                 .clipShape(Circle())
                                 .onTapGesture {
                                     show = false
@@ -67,6 +67,7 @@ struct CourseDetail: View {
                     
                     Text("Minial coding experience required, such as in HTML and CSS. Please not tht Xcode 11 and Catalina are essential. Once you get everthing installed, it'll get a lot freindlier! I added a bunch of troubleshoots at the end if this page to help you navigate the issues you might encounter.")
                 }
+                .foregroundColor(.primary)
                 .padding(30)
             }
         }
