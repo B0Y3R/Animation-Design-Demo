@@ -7,12 +7,20 @@
 
 import SwiftUI
 
+func haptic(type: UINotificationFeedbackGenerator.FeedbackType = .success) {
+    UINotificationFeedbackGenerator().notificationOccurred(type)
+}
+
+func impact(style: UIImpactFeedbackGenerator.FeedbackStyle = .heavy) {
+    UIImpactFeedbackGenerator(style: style).impactOccurred()
+}
+
 // were going for neumorphic buttons here
 // lots of inner shadow practice
 
 struct Buttons: View {
     
-    let backgroundColor: CGColor = #colorLiteral(red: 0.7890059352, green: 0.8985413909, blue: 0.9454202056, alpha: 1)
+    let backgroundColor: String = "background3"
     
     var body: some View {
         VStack(spacing: 50) {
@@ -30,7 +38,7 @@ struct Buttons: View {
 
 struct Buttons_Previews: PreviewProvider {
     static var previews: some View {
-        Buttons()
+        Buttons().preferredColorScheme(.light)
     }
 }
 
@@ -39,8 +47,8 @@ struct RectangeButton: View {
     @State var tap: Bool = false
     @State var press: Bool = false
     
-    let white: CGColor = #colorLiteral(red: 1, green: 1, blue: 0.9999999404, alpha: 1)
-    let blue: CGColor = #colorLiteral(red: 0.7549576163, green: 0.8167447448, blue: 0.9200447202, alpha: 1)
+    let white: String = "background2"
+    let blue: String = "background3"
     let iconColor: CGColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
     
     var body: some View {
@@ -96,6 +104,7 @@ struct RectangeButton: View {
                 LongPressGesture(minimumDuration: 0.5, maximumDistance: 10) // we define a long press guesture and have it watch with onChanged
                     .onChanged { value in
                         self.tap = true
+                        haptic()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // make the animation delay before changing state again
                             self.tap = false
                         }
@@ -113,9 +122,10 @@ struct CircleButton: View {
     @State var tap: Bool = false
     @State var press: Bool = false
     
-    let white: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-    let blue: CGColor = #colorLiteral(red: 0.7549576163, green: 0.8167447448, blue: 0.9200447202, alpha: 1)
-    let backgroundColor: CGColor = #colorLiteral(red: 0.7890059352, green: 0.8985413909, blue: 0.9454202056, alpha: 1)
+    let white: String = "background2"
+    let blue: String = "background1"
+    
+    let backgroundColor: String = "background3"
     
     var body: some View {
         ZStack {
@@ -124,12 +134,14 @@ struct CircleButton: View {
             // the moon into the center from the bottom right
             Image(systemName: "sun.max")
                 .font(.system(size: 44, weight: .light))
+                .foregroundColor(.primary)
                 .scaleEffect(press ? 0.1 : 1)
                 .offset(x: press ? -90 : 0, y: press ? -90 : 0) // on long press we move the icon to the top right, it disspears due to the clipShape modifier
                 .rotation3DEffect(Angle(degrees: press ? 20: 0), axis: (x: 10, y: -10, z: 0))
             
             Image(systemName: "moon")
                 .font(.system(size: 44, weight: .light))
+                .foregroundColor(.primary)
                 .scaleEffect(press ? 1 : 0.1)
                 .offset(x: press ? 0 : 90, y: press ? 0 : 90) // on long press we move the icon to the top right, it disspears due to the clipShape modifier
                 .rotation3DEffect(Angle(degrees: press ? 0 : 20), axis: (x: 10, y: -10, z: 0))
@@ -170,6 +182,7 @@ struct CircleButton: View {
             
                 .onEnded { value in
                     self.press.toggle()
+                    haptic()
                 }
         )
     }
@@ -180,9 +193,9 @@ struct PayButton: View {
     @GestureState var tap: Bool = false
     @State var press: Bool = false
     
-    let white: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-    let blue: CGColor = #colorLiteral(red: 0.7549576163, green: 0.8167447448, blue: 0.9200447202, alpha: 1)
-    let backgroundColor: CGColor = #colorLiteral(red: 0.7890059352, green: 0.8985413909, blue: 0.9454202056, alpha: 1)
+    let white: Color = Color("background1")
+    let blue: Color = Color("background2")
+    let backgroundColor: Color = Color("background3")
     
     var body: some View {
         
@@ -227,18 +240,18 @@ struct PayButton: View {
         .background(
             ZStack {
                 LinearGradient(
-                    gradient: Gradient(colors: press ? [Color(backgroundColor), Color(white)] : [Color(white), Color(backgroundColor)]),
+                    gradient: Gradient(colors: press ? [backgroundColor, white] : [white, backgroundColor]),
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
                 
                 Circle()
-                    .stroke(Color(press ? white : blue) ,lineWidth: 10)
+                    .stroke(press ? white : blue,lineWidth: 10)
                     .blur(radius: 4)
                     .offset(x: -5, y: -5)
                 
                 Circle()
-                    .stroke(Color(press ? blue : white), lineWidth: 5)
+                    .stroke(press ? blue : white, lineWidth: 5)
                     .blur(radius: 4)
                     .offset(x: 5, y:5)
             }
@@ -257,8 +270,8 @@ struct PayButton: View {
                 .rotation3DEffect(Angle(degrees: 180), axis: (x: 1, y: 0, z: 0))
                 .animation(.easeInOut)
         )
-        .shadow(color: Color(press ? blue : white), radius: 20, x: -20, y: -20) // set shadow to top left
-        .shadow(color: Color(press ? white : blue), radius: 20, x: 20, y: 20)
+        .shadow(color: press ? blue : white, radius: 20, x: -20, y: -20) // set shadow to top left
+        .shadow(color: press ? white : blue, radius: 20, x: 20, y: 20)
         .scaleEffect(tap ? 1.2 : 1)
         .gesture(
             LongPressGesture()
@@ -267,6 +280,7 @@ struct PayButton: View {
                 }
                 .onEnded { value in
                     self.press.toggle()
+                    haptic()
                 }
         )
     }
