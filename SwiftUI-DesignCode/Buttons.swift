@@ -11,6 +11,16 @@ import SwiftUI
 // lots of inner shadow practice
 
 struct Buttons: View {
+    
+    @State var tap: Bool = false
+    @State var press: Bool = false
+    
+    let white: CGColor = #colorLiteral(red: 1, green: 1, blue: 0.9999999404, alpha: 1)
+    let blue: CGColor = #colorLiteral(red: 0.7549576163, green: 0.8167447448, blue: 0.9200447202, alpha: 1)
+    let backgroundColor: CGColor = #colorLiteral(red: 0.9016503096, green: 0.9350115657, blue: 0.9998994452, alpha: 1)
+    let iconColor: CGColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+    
+    
     var body: some View {
         VStack {
             Text("Button")
@@ -20,12 +30,12 @@ struct Buttons: View {
                     
                     // nest in zStack were going to be building layers to produce the inner shadow
                     ZStack {
-                        Color(.gray).opacity(0.01)
+                        Color(press ? white : blue)
                         
                         // draw a new rectangle on top excatly the same shape as the button above
                         // this creates a white layer on top of the button
                         RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .foregroundColor(.white) // set the color
+                            .foregroundColor(Color(press ? blue : white)) // set the color
                             .blur(radius: 4) // this sets the blur on the inside edges
                             .offset(x: -8, y: -8) // pulls this layer up to the top left
                         
@@ -34,7 +44,7 @@ struct Buttons: View {
                         RoundedRectangle(cornerRadius: 16, style: .continuous)
                             .fill(
                                 LinearGradient(
-                                    gradient: Gradient(colors: [Color(#colorLiteral(red: 0.8991510272, green: 0.9244170785, blue: 0.9885553718, alpha: 1)), Color(.white)] ),
+                                    gradient: Gradient(colors: [Color(white), Color(blue)]),
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
@@ -44,12 +54,41 @@ struct Buttons: View {
                     }
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .shadow(color: Color(.blue).opacity(0.25),  radius: 20, x: 20, y: 20)
-                .shadow(color: Color(.white), radius: 20, x: -20, y: -20)
+                .overlay(
+                    // overlay is like .background, except its going to float outside of the box instead being clipped
+                    HStack { // HStack to push the icon to the right when usings a spacer
+                        Image(systemName: "person.crop.circle")     // sficons
+                            .font(.system(size: 24, weight: .light)) // need to use font on images with sf icon for styling size
+                            .foregroundColor(Color.white.opacity( press ? 0 : 1)) // same thing here font styling
+                            .frame(width: press ? 64 : 54, height: press ? 4 : 50)
+                            .background(Color(iconColor))
+                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                            .shadow(color: Color(iconColor).opacity(0.3), radius: 10, x: 10, y: 10)
+                            .offset(x: press ? 70 : -20, y: press ? 16 : 0) // using offset to pull it more to the left
+                            Spacer()
+                    }
+                )
+                .shadow(color: press ? Color(white) : Color(blue),  radius: 20, x: 20, y: 20)
+                .shadow(color: press ? Color(blue) : Color(white), radius: 20, x: -20, y: -20)
+                .scaleEffect(tap ? 1.2 : 1) // here we're adding a scale effect for our "tap" state
+                .gesture(
+                    LongPressGesture(minimumDuration: 0.5, maximumDistance: 10) // we define a long press guesture and have it watch with onChanged
+                        .onChanged { value in
+                            self.tap = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // make the animation delay before changing state again
+                                self.tap = false
+                            }
+                        }
+                    
+                        .onEnded { value in
+                            self.press.toggle()
+                        }
+                 )
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)
-        .background(Color(#colorLiteral(red: 0.9016503096, green: 0.9350115657, blue: 0.9987991452, alpha: 1)))
+        .animation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0))
+        .background(Color(backgroundColor))
     }
 }
 
