@@ -10,63 +10,110 @@ import SwiftUI
 struct LoginView: View {
     @State var email: String = ""
     @State var password: String = ""
+    @State var isFocused: Bool = false
+    @State var showAlert: Bool = false
+    @State var alertMessage: String = "somthing went wrong"
+    
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil , for: nil)
+    }
     
     var body: some View {
-        ZStack(alignment: .top) {
+        ZStack {
             Color.black.edgesIgnoringSafeArea(.all) // back layer
-            
-            Color("background2") // middle layer
+            ZStack(alignment: .top) {
+                Color("background2") // middle layer
+                    .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
+                    .edgesIgnoringSafeArea(.bottom)
+                
+                CoverView()
+                
+                VStack {
+                    HStack {
+                        Image(systemName: "person.crop.circle.fill")
+                            .foregroundColor(Color.blue.opacity(0.5))
+                            .frame(width: 44, height: 44)
+                            .background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                            .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 5)
+                            .padding(.leading)
+                        
+                        TextField("Your Email".uppercased(), text: $email)
+                            .keyboardType(.emailAddress)
+                            .font(.subheadline)
+                            .padding(.leading)
+                            .frame(height: 44)
+                            .onTapGesture {
+                                self.isFocused = true
+                            }
+                    }
+                    
+                    Divider()
+                        .padding(.leading, 80)
+                    
+                    HStack {
+                        Image(systemName: "lock.fill")
+                            .foregroundColor(Color.blue.opacity(0.5))
+                            .frame(width: 44, height: 44)
+                            .background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                            .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 5)
+                            .padding(.leading)
+                        
+                        SecureField("Password".uppercased(), text: $password)
+                            .keyboardType(.default)
+                            .font(.subheadline)
+                            .padding(.leading)
+                            .frame(height: 44)
+                            .onTapGesture {
+                                self.isFocused = true
+                            }
+                    }
+                        
+                }
+                .frame(height: 136)
+                .frame(maxWidth: .infinity)
+                .background(
+                    BlurView(style: .systemMaterial)
+                )
                 .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-                .edgesIgnoringSafeArea(.bottom)
-            
-            CoverView()
-            
-            VStack {
-                HStack {
-                    Image(systemName: "person.crop.circle.fill")
-                        .foregroundColor(Color.blue.opacity(0.5))
-                        .frame(width: 44, height: 44)
-                        .background(Color.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                        .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 5)
-                        .padding(.leading)
-                    
-                    TextField("Your Email".uppercased(), text: $email)
-                        .keyboardType(.emailAddress)
-                        .font(.subheadline)
-                        .padding(.leading)
-                        .frame(height: 44)
-                }
-                
-                Divider()
-                    .padding(.leading, 80)
+                .shadow(color: Color.black.opacity(0.15), radius: 20, x: 0, y: 20)
+                .padding(.horizontal)
+                .offset(y: 460)
                 
                 HStack {
-                    Image(systemName: "lock.fill")
-                        .foregroundColor(Color.blue.opacity(0.5))
-                        .frame(width: 44, height: 44)
-                        .background(Color.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                        .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 5)
-                        .padding(.leading)
-                    
-                    SecureField("Password".uppercased(), text: $password)
-                        .keyboardType(.default)
+                    Text("Forgot Password?")
                         .font(.subheadline)
-                        .padding(.leading)
-                        .frame(height: 44)
-                }
+                        .foregroundColor(.black)
                     
+                    Spacer()
+                    Button(action: {
+                        self.showAlert = true
+                        self.hideKeyboard()
+                        self.isFocused = false
+                    }) {
+                        Text("Log in")
+                            .foregroundColor(Color.white)
+                    }
+                    .padding(12)
+                    .padding(.horizontal, 30)
+                    .background(Color.blue.opacity(0.9))
+                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    .shadow(color: Color.blue.opacity(0.3), radius: 20, x: 0, y: 20)
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: Text("Error"), message: Text(self.alertMessage), dismissButton: .default(Text("OK")))
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                .padding()
+
             }
-            .frame(height: 136)
-            .frame(maxWidth: .infinity)
-            .background(
-                BlurView(style: .systemMaterial)
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-            .shadow(color: Color.black.opacity(0.15), radius: 20, x: 0, y: 20)
-            .padding(.horizontal)
-            .offset(y: 460)
+            .offset(y: isFocused ? -300 : 0)
+            .animation(isFocused ? .easeInOut : nil) // allows you to enabled or disable an animation based on state
+            .onTapGesture {
+                self.isFocused = false
+                self.hideKeyboard()
+            }
         }
     }
 }
@@ -88,10 +135,10 @@ struct CoverView: View {
             GeometryReader { geometry in                                                // wrap Text in a geometry reader
                 Text("Learn design & code.\nFrom scratch.")
                     .font(.system(size: geometry.size.width / 10, weight: .bold))       // take screen size into account when displaying title fonts
+                    .foregroundColor(Color(.white))
             }
             .frame(maxWidth: 375, maxHeight: 100) // ideal max font size
             .padding(.horizontal, 16)
-            .foregroundColor(Color("background1"))
             .offset(x: viewState.width / 15, y: viewState.height / 15)
             
             
@@ -121,14 +168,9 @@ struct CoverView: View {
                     .blendMode(.overlay)
                     .rotationEffect(Angle(degrees: show ? 360+90 : 0), anchor: .topLeading)
             }
-                .animation(Animation.linear(duration: 40).repeatForever())    // animation for the zStack with both blobs, animating the rotation effect
+                .animation(Animation.linear(duration: 40).repeatForever())    // animation for the zStack with both blobs, animating the rotation
         )
-        .background(
-            Image("Card3")
-                .offset(x: viewState.width / 20, y: viewState.height / 20)
-            ,
-            alignment: .bottom
-        )
+        .background(Image("Card3").offset(x: viewState.width / 20, y: viewState.height / 20), alignment: .bottom)
         .background(Color("card1"))
         .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
         .scaleEffect(isDragging ? 0.8 : 1)
