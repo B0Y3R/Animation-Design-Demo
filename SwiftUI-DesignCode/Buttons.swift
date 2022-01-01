@@ -17,7 +17,8 @@ struct Buttons: View {
     var body: some View {
         VStack(spacing: 50) {
             RectangeButton()
-            CircleButton() // set shadow to bottom right
+            CircleButton()
+            PayButton()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)
@@ -167,6 +168,103 @@ struct CircleButton: View {
                     }
                 }
             
+                .onEnded { value in
+                    self.press.toggle()
+                }
+        )
+    }
+}
+
+struct PayButton: View {
+    
+    @GestureState var tap: Bool = false
+    @State var press: Bool = false
+    
+    let white: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    let blue: CGColor = #colorLiteral(red: 0.7549576163, green: 0.8167447448, blue: 0.9200447202, alpha: 1)
+    let backgroundColor: CGColor = #colorLiteral(red: 0.7890059352, green: 0.8985413909, blue: 0.9454202056, alpha: 1)
+    
+    var body: some View {
+        
+        // three images here in a z stack
+        // the first sets in the background
+        // fades out and scales down on longpress
+        
+        // the second sets in the middle
+        // as you long press it starts to animate up in front of the last image
+        // you cant see it move in to frame until the finger print image
+        // due to the clipShape rectangle
+        // this fades out and scales down on longpress
+        
+        // the third image is a finished check mark
+        // fades in and scales up on longpress
+        
+        ZStack {
+            Image("fingerprint")
+                .opacity(press ? 0 : 1)
+                .scaleEffect(press ? 0 : 1)
+            
+            Image("fingerprint-2")
+                .clipShape(
+                    Rectangle()
+                        .offset(y: tap ? 0 : 50)
+                )
+                .animation(.easeInOut)
+                .opacity(press ? 0 : 1)
+                .scaleEffect(press ? 0 : 1)
+            
+                LinearGradient(gradient: Gradient(colors: [.blue, .purple]), startPoint: .top, endPoint: .bottom)
+                    .mask(
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 34, weight: .light))
+                            .foregroundColor(.white)
+                            .opacity(press ? 1 : 0)
+                            .scaleEffect(press ? 1 : 0)
+                            .animation(.easeInOut)
+                    )
+        }
+        .frame(width: 120, height: 120)
+        .background(
+            ZStack {
+                LinearGradient(
+                    gradient: Gradient(colors: press ? [Color(backgroundColor), Color(white)] : [Color(white), Color(backgroundColor)]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                
+                Circle()
+                    .stroke(Color(press ? white : blue) ,lineWidth: 10)
+                    .blur(radius: 4)
+                    .offset(x: -5, y: -5)
+                
+                Circle()
+                    .stroke(Color(press ? blue : white), lineWidth: 5)
+                    .blur(radius: 4)
+                    .offset(x: 5, y:5)
+            }
+        )
+        .clipShape(Circle())
+        .overlay(
+            Circle()
+                .trim(from: tap ? 0.001 : 1, to: 1)
+                .stroke(
+                    LinearGradient(gradient: Gradient(colors: [.blue, .purple]), startPoint: .topLeading, endPoint: .bottomTrailing),
+                    style: StrokeStyle(lineWidth: 5, lineCap: .round)
+                )
+                .frame(width: 88, height: 88)
+                .shadow(color: .purple, radius: 3, x: -3, y: -5)
+                .rotationEffect(Angle(degrees: 90))
+                .rotation3DEffect(Angle(degrees: 180), axis: (x: 1, y: 0, z: 0))
+                .animation(.easeInOut)
+        )
+        .shadow(color: Color(press ? blue : white), radius: 20, x: -20, y: -20) // set shadow to top left
+        .shadow(color: Color(press ? white : blue), radius: 20, x: 20, y: 20)
+        .scaleEffect(tap ? 1.2 : 1)
+        .gesture(
+            LongPressGesture()
+                .updating($tap) { currentState, gestureState, transaction in
+                    gestureState = currentState
+                }
                 .onEnded { value in
                     self.press.toggle()
                 }
