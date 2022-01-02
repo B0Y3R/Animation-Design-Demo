@@ -77,7 +77,7 @@ struct HomeView: View {
                     .offset(y: -30)
                     
                     CourseList()
-                        .frame(width: bounds.size.width)
+                        .frame(width: bounds.size.width, height: bounds.size.height)
                         .offset(y: -60)
                     
                     Spacer()

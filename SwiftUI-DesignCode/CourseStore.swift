@@ -42,7 +42,7 @@ class CourseStore: ObservableObject {
                     Course(
                         title: item.fields["title"] as! String,
                         subtitle: item.fields["subtitle"] as! String,
-                        image: item.fields.linkedAsset(at: "image")?.url ?? URL(string: "")!,
+                        image: Image("Card4"), //item.fields.linkedAsset(at: "image")?.url ?? URL(string: "")
                         logo: Image("Logo1"),
                         color: self.colors.randomElement()!,
                         show: false

@@ -44,7 +44,7 @@ struct CourseDetail: View {
                         }
                     }
                     Spacer()
-                    WebImage(url: course.image)
+                    course.image
                         .resizable()
                         .aspectRatio(contentMode:.fit)
                         .frame(maxWidth: .infinity)
