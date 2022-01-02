@@ -14,6 +14,23 @@ struct LoginView: View {
     @State var showAlert: Bool = false
     @State var alertMessage: String = "somthing went wrong"
     @State var isLoading: Bool = false
+    @State var isSuccessful: Bool = false
+    
+    
+    func login() {
+        self.hideKeyboard()
+        self.isFocused = false
+        self.isLoading = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.isLoading = false
+            self.isSuccessful = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.isSuccessful = false
+            }
+        }
+    }
     
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil , for: nil)
@@ -23,10 +40,8 @@ struct LoginView: View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all) // back layer
             ZStack(alignment: .top) {
-                Color("background2") // middle layer
-                    .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-                    .edgesIgnoringSafeArea(.bottom)
-                
+                BackLayerView()
+
                 CoverView()
                 
                 VStack {
@@ -88,18 +103,7 @@ struct LoginView: View {
                         .foregroundColor(.black)
                     
                     Spacer()
-                    Button(action: {
-                   
-                        self.hideKeyboard()
-                        self.isFocused = false
-                        self.isLoading = true
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            self.isLoading = false
-                            self.showAlert = true
-                        }
-          
-                    }) {
+                    Button(action: { login() }) {
                         Text("Log in")
                             .foregroundColor(Color.white)
                     }
@@ -125,6 +129,10 @@ struct LoginView: View {
             
             if isLoading {
                 LoadingView()
+            }
+            
+            if isSuccessful {
+                SuccessView()
             }
         }
     }
@@ -199,5 +207,13 @@ struct CoverView: View {
                     self.viewState = .zero
                 }
         )
+    }
+}
+
+struct BackLayerView: View {
+    var body: some View {
+        Color("background2") // middle layer
+            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
+            .edgesIgnoringSafeArea(.bottom)
     }
 }
