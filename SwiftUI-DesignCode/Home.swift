@@ -12,6 +12,7 @@ struct Home: View {
     @State var showProfile: Bool = false
     @State var viewState: CGSize = CGSize.zero
     @State var showContent: Bool = false
+    @EnvironmentObject var user: UserStore
     
     var body: some View {
         ZStack {
@@ -73,6 +74,28 @@ struct Home: View {
                         }
                 )
             
+            if user.showLogin {
+                ZStack {
+                    LoginView()
+                    
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Image(systemName: "xmark")
+                                .frame(width:36, height: 36)
+                                .foregroundColor(.white)
+                                .background(.black)
+                            .clipShape(Circle())
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                    .onTapGesture {
+                        self.user.showLogin = false
+                    }
+                }
+            }
+            
             if showContent {
                 BlurView(style: .systemThinMaterial)
                     .edgesIgnoringSafeArea(.all)
@@ -104,21 +127,39 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home().preferredColorScheme(.dark)
+        Home()
+            .preferredColorScheme(.dark)
+            .environmentObject(UserStore())
     }
 }
 
 struct AvatarView: View {
     
     @Binding var showProfile: Bool
+    @EnvironmentObject var user: UserStore
     
     var body: some View {
-        Button(action: { showProfile.toggle() }) {
-            Image("Avatar")
-                .renderingMode(.original)
-                .resizable()
-                .frame(width: 36, height: 36)
-                .clipShape(Circle())
+        VStack {
+            if user.isLogged {
+                Button(action: { showProfile.toggle() }) {
+                Image("Avatar")
+                    .renderingMode(.original)
+                    .resizable()
+                    .frame(width: 36, height: 36)
+                    .clipShape(Circle())
+                }
+            } else {
+                Button(action: { self.user.showLogin.toggle() }) {
+                Image(systemName: "person")
+                    .foregroundColor(.primary) // primary and secondary are best for textual content, when usingn dark/light theme
+                    .font(.system(size: 16, weight: .medium))
+                    .frame(width: 36, height: 36)
+                    .background(Color("background3"))
+                    .clipShape(Circle())
+                    .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
+                }
+            }
         }
     }
 }

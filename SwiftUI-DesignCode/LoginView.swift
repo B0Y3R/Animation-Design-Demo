@@ -16,6 +16,7 @@ struct LoginView: View {
     @State var alertMessage: String = "somthing went wrong"
     @State var isLoading: Bool = false
     @State var isSuccessful: Bool = false
+    @EnvironmentObject var user: UserStore
     
     
     func login() {
@@ -31,13 +32,14 @@ struct LoginView: View {
                 self.showAlert = true
             } else {
                 self.isSuccessful = true
+                self.user.isLogged = true
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.email = ""
+                    self.password = ""
                     self.isSuccessful = false
+                    self.user.showLogin = false
                 }
-                
-                self.email = ""
-                self.password = ""
             }
         }
     }

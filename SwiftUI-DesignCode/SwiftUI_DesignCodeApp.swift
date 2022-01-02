@@ -12,21 +12,12 @@ import Firebase
 
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
   var window: UIWindow?
 
-
   func application(_ application: UIApplication,
-
-    didFinishLaunchingWithOptions launchOptions:
-
-                   [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     FirebaseApp.configure()
-
     return true
-
   }
 
 }
@@ -38,7 +29,8 @@ struct SwiftUI_DesignCodeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            TabBar()
+                .environmentObject(UserStore())
         }
     }
 }

@@ -46,6 +46,7 @@
 		7DC54C2927822F6A001A1E23 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7DC54C2827822F6A001A1E23 /* FirebaseAuth */; };
 		7DC54C2B27822F6A001A1E23 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 7DC54C2A27822F6A001A1E23 /* FirebaseAuthCombine-Community */; };
 		7DC54C2D27823285001A1E23 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7DC54C2C27823285001A1E23 /* GoogleService-Info.plist */; };
+		7DC54C2F27823524001A1E23 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC54C2E27823524001A1E23 /* UserStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		7DBCEEFA277FBDDD008EE18D /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		7DBCEEFC2780A023008EE18D /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		7DC54C2C27823285001A1E23 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7DC54C2E27823524001A1E23 /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				7D9A9BD427821D7B00303EFB /* SuccessView.swift */,
 				7DBCEED3277D1468008EE18D /* HomeView.swift */,
 				7DA356132780EA6000155A35 /* LoginView.swift */,
+				7DC54C2E27823524001A1E23 /* UserStore.swift */,
 				7DBCEEE4277E69F4008EE18D /* CourseList.swift */,
 				7DBCEEF1277FAB2C008EE18D /* CourseStore.swift */,
 				7DBCEEE6277E90A6008EE18D /* CourseDetail.swift */,
@@ -271,6 +274,7 @@
 				7DA3561E278103CA00155A35 /* LoadingView.swift in Sources */,
 				7DBCEEE0277E5B35008EE18D /* Modifiers.swift in Sources */,
 				7DBCEEDC277E3AE6008EE18D /* TabBar.swift in Sources */,
+				7DC54C2F27823524001A1E23 /* UserStore.swift in Sources */,
 				7DBCEEFB277FBDDD008EE18D /* BlurView.swift in Sources */,
 				7DBCEED8277E2919008EE18D /* UpdateDetail.swift in Sources */,
 				7DBCEEE5277E69F4008EE18D /* CourseList.swift in Sources */,
