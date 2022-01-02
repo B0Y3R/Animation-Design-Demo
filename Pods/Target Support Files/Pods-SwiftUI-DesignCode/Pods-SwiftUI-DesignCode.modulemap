@@ -1,0 +1,6 @@
+framework module Pods_SwiftUI_DesignCode {
+  umbrella header "Pods-SwiftUI-DesignCode-umbrella.h"
+
+  export *
+  module * { export * }
+}

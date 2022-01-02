@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>554857852765-02bfjjjrkijqbpm60r6dolh6lo79phut.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.554857852765-02bfjjjrkijqbpm60r6dolh6lo79phut</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAsjWZjiHuuGkpYUlQAWSqg0NEJ_Yyzdyw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>554857852765</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>jbdw.yeet.application</string>
+	<key>PROJECT_ID</key>
+	<string>designcode-swiftuicourse-8d580</string>
+	<key>STORAGE_BUCKET</key>
+	<string>designcode-swiftuicourse-8d580.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:554857852765:ios:04a73628ee4d840b0c42b4</string>
+</dict>
+</plist>
