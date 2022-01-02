@@ -50,7 +50,6 @@ struct CourseList: View {
                     }
 
                 }
-                .frame(width: screen.width)
                 .animation(
                     .spring(
                         response: 0.5,

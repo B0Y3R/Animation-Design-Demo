@@ -16,71 +16,74 @@ struct HomeView: View {
 
     
     var body: some View {
-        ScrollView {
-            VStack {
-                HStack {
-                    Text("Watching")
-                      .modifier(CustomFontModifier())
+        GeometryReader { bounds in
+            ScrollView {
+                VStack {
+                    HStack {
+                        Text("Watching")
+                          .modifier(CustomFontModifier())
 
-                    Spacer()
-                    
-                    AvatarView(showProfile: $showProfile)
-                    
-                    Button(action: {
-                        showUpdate.toggle()
-                    }) {
-                        Image(systemName: "bell")
-                            .foregroundColor(.primary) // primary and secondary are best for textual content, when usingn dark/light theme
-                            .font(.system(size: 16, weight: .medium))
-                            .frame(width: 36, height: 36)
-                            .background(Color("background3"))
-                            .clipShape(Circle())
-                            .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
-                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
-                    }
-                    .sheet(isPresented: $showUpdate) {
-                        UpdateList()
-                    }
-                    
-                }
-                .padding(.horizontal)
-                .padding(.leading, 14)
-                .padding(.top, 30)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    WatchRingsView()
-                        .padding(.horizontal, 30)
-                        .padding(.bottom, 25)
-                        .onTapGesture {
-                            showContent = true
+                        Spacer()
+                        
+                        AvatarView(showProfile: $showProfile)
+                        
+                        Button(action: {
+                            self.showUpdate.toggle()
+                        }) {
+                            Image(systemName: "bell")
+                                .foregroundColor(.primary) // primary and secondary are best for textual content, when usingn dark/light theme
+                                .font(.system(size: 16, weight: .medium))
+                                .frame(width: 36, height: 36)
+                                .background(Color("background3"))
+                                .clipShape(Circle())
+                                .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
                         }
-                }
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 15) {
-                        ForEach(sectionData) { section in
-                            GeometryReader { geometry in
-                                SectionView(section: section)
-                                    .rotation3DEffect(
-                                        Angle(
-                                            degrees: Double(geometry.frame(in: .global).minX - 30) / 10),
-                                        axis: (x: 0, y: -200, z: 0)
-                                    )
+                        .sheet(isPresented: $showUpdate) {
+                            UpdateList()
+                        }
+                        
+                    }
+                    .padding(.horizontal)
+                    .padding(.leading, 14)
+                    .padding(.top, 30)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        WatchRingsView()
+                            .padding(.horizontal, 30)
+                            .padding(.bottom, 25)
+                            .onTapGesture {
+                                showContent = true
                             }
-                            .frame(width: 275, height: 275)
-                        }
                     }
-                    .padding(30)
-                    .padding(.bottom, 30)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 15) {
+                            ForEach(sectionData) { section in
+                                GeometryReader { geometry in
+                                    SectionView(section: section)
+                                        .rotation3DEffect(
+                                            Angle(
+                                                degrees: Double(geometry.frame(in: .global).minX - 30) / 10),
+                                            axis: (x: 0, y: -200, z: 0)
+                                        )
+                                }
+                                .frame(width: bounds.size.width - 60 , height: 275)
+                            }
+                        }
+                        .padding(30)
+                        .padding(.bottom, 30)
+                    }
+                    .offset(y: -30)
+                    
+                    CourseList()
+                        .frame(width: bounds.size.width)
+                        .offset(y: -60)
+                    
+                    Spacer()
                 }
-                .offset(y: -30)
-                
-                CourseList()
-                .offset(y: -60)
-                
-                Spacer()
+                .frame(width: bounds.size.width)
             }
-            .frame(width: screen.width)
         }
     }
 }
@@ -166,6 +169,7 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView(showProfile: .constant(false), showContent: .constant(false))
             .preferredColorScheme(.dark)
+            .environmentObject(UserStore())
     }
 }
 

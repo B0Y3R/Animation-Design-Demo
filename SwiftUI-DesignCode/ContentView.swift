@@ -19,7 +19,8 @@ struct ContentView: View {
             TitleView(showCard: showCard)
             
             BackCardView()
-                .frame(width: showCard ? 300 : 340.0, height: 220)
+                .frame(maxWidth: showCard ? 300 : 340.0)
+                .frame(height: 220)
                 .background(Color("card4"))
                 .cornerRadius(20)
                 .shadow(radius: 20)
@@ -36,7 +37,8 @@ struct ContentView: View {
                 .animation(.easeInOut(duration: 0.4))
 
             BackCardView()
-                .frame(width: showCard ? 350 : 340.0, height: 220)
+                .frame(maxWidth: showCard ? 350 : 340.0)
+                .frame(height: 220)
                 .background(Color("card3"))
                 .cornerRadius(20)
                 .shadow(radius: 20)
@@ -66,38 +68,41 @@ struct ContentView: View {
                         })
                 )
             
-            BottomCardView(show: $showCard )
-                .offset(x: 0, y: showCard ? 360 : 1000 )
-                .offset(y: bottomCardState.height)
-                .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            bottomCardState = value.translation
-                            
-                            if showFull {
-                                bottomCardState.height += -300
-                            }
-                            
-                            if bottomCardState.height < -300 {
-                                bottomCardState.height = -300
-                            }
+            GeometryReader { bounds in
+                BottomCardView(show: $showCard )
+                    .offset(x: 0, y: self.showCard ? bounds.size.height / 2 : bounds.size.height )
+                    .offset(y: self.bottomCardState.height)
+                    .animation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8))
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                self.bottomCardState = value.translation
+                                
+                                if self.showFull {
+                                    self.bottomCardState.height += -300
+                                }
+                                
+                                if self.bottomCardState.height < -300 {
+                                    self.bottomCardState.height = -300
+                                }
 
-                        }
-                        .onEnded { value in
-                            if bottomCardState.height > 100 {
-                                showCard = false
                             }
-                            
-                            if (bottomCardState.height < -100 && !showFull) || (bottomCardState.height < -250 && showFull) {
-                                showFull = true
-                                bottomCardState.height = -300
-                            } else {
-                                bottomCardState = .zero
-                                showFull = false
+                            .onEnded { value in
+                                if self.bottomCardState.height > 100 {
+                                    self.showCard = false
+                                }
+                                
+                                if (self.bottomCardState.height < -100 && !self.showFull) || (self.bottomCardState.height < -250 && self.showFull) {
+                                    self.showFull = true
+                                    self.bottomCardState.height = -300
+                                } else {
+                                    self.bottomCardState = .zero
+                                    self.showFull = false
+                                }
                             }
-                        }
                 )
+            }
+            .edgesIgnoringSafeArea(.all)
         }
     }
 }
@@ -105,6 +110,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().preferredColorScheme(.dark)
+            .previewLayout(.fixed(width: 320, height: 667))
     }
 }
 
@@ -124,6 +130,9 @@ struct TitleView: View {
             .padding()
             
             Image("Background1")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxWidth: 375)
             Spacer()
         }
         .opacity(showCard ? 0.2 : 1)
@@ -166,7 +175,8 @@ struct CardView: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 300, height: 110, alignment: .top)
         }
-        .frame(width: showCard ? 375 : 340, height: 220)
+        .frame(maxWidth: showCard ? 375 : 340)
+        .frame(height: 220)
         .background(.black)
         .clipShape(
             RoundedRectangle(cornerRadius: showCard ? 30 : 20, style: .continuous)
@@ -234,9 +244,10 @@ struct BottomCardView: View {
         }
         .padding(.top, 8)
         .padding(.horizontal, 20)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: 712)
         .background(BlurView(style: .systemUltraThinMaterial)) // system material will help you with dark mode / light mode
         .cornerRadius(30)
         .shadow(radius: 20)
+        .frame(maxWidth: .infinity)
     }
 }
