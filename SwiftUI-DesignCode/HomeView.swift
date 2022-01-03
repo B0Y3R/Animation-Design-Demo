@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct HomeView: View {
-    
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @ObservedObject var store = CourseStore()
     @Binding var showProfile: Bool
     @Binding var showContent: Bool
+    @Binding var viewState: CGSize
     
     @State var showUpdate: Bool = false
+    @State var active: Bool = false
+    @State var activeIndex: Int = -1
 
     
     var body: some View {
@@ -58,17 +62,15 @@ struct HomeView: View {
                     }
                     
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 15) {
+                        HStack(spacing: 20) {
                             ForEach(sectionData) { section in
                                 GeometryReader { geometry in
                                     SectionView(section: section)
                                         .rotation3DEffect(
-                                            Angle(
-                                                degrees: Double(geometry.frame(in: .global).minX - 30) / 10),
-                                            axis: (x: 0, y: -200, z: 0)
-                                        )
+                                            Angle(degrees: Double(geometry.frame(in: .global).minX) / -getAngleMultiplier(bounds:bounds)),
+                                                        axis: (x: 0, y: 100, z: 0))
                                 }
-                                .frame(width: bounds.size.width - 60 , height: 275)
+                                .frame(width: 275, height: 275)
                             }
                         }
                         .padding(30)
@@ -76,13 +78,56 @@ struct HomeView: View {
                     }
                     .offset(y: -30)
                     
-                    CourseList()
-                        .frame(width: bounds.size.width, height: bounds.size.height)
-                        .offset(y: -60)
+
+                    
+                    VStack(spacing: 30) {
+                        Text("Courses")
+                            .font(.largeTitle)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 30)
+                            .padding(.top, 30)
+                            .blur(radius: self.active ? 20 : 0)
+                        
+                        ForEach(store.courses.indices, id: \.self) { index in
+                            GeometryReader { geometry in
+                                CourseView(
+                                    show: $store.courses[index].show,
+                                    active: $active,
+                                    activeIndex: $activeIndex,
+                                    index: index,
+                                    course: store.courses[index],
+                                    bounds: bounds
+                                )
+                                .offset(y: store.courses[index].show ? -geometry.frame(in: .global).minY : 0)
+                                .opacity(activeIndex != index && active ? 0 : 1)
+                                .scaleEffect(activeIndex != index && active ? 0 : 1)
+                                .offset(x: activeIndex != index && active ? bounds.size.width : 0)
+                            }
+                            .frame(height: self.horizontalSizeClass == .regular ? 80 : 280)
+                            .frame(maxWidth: store.courses[index].show ? 712 : getCardWidth(bounds: bounds), alignment: .center)
+                            .zIndex(store.courses[index].show ? 1 : 0)
+                        }
+                    }
+                    .padding(.bottom, 300)
+                    .offset(y: -60)
                     
                     Spacer()
                 }
                 .frame(width: bounds.size.width)
+                .offset(x: 0, y: showProfile ? -450 : 0)
+                .rotation3DEffect(
+                    Angle(degrees: showProfile ? Double(viewState.height / 10) - 10 : 0),
+                    axis: (x: 10.0, y: 0, z: 0)
+                )
+                .scaleEffect(showProfile ? 0.9 : 1)
+                .animation(
+                    .spring(
+                        response: 0.5,
+                        dampingFraction: 0.6,
+                        blendDuration: 0
+                    )
+                )
             }
         }
     }
@@ -164,12 +209,24 @@ struct SectionView: View {
     }
 }
 
+func getAngleMultiplier(bounds: GeometryProxy) -> Double {
+    if bounds.size.width > 500 {
+        return 80
+    }
+    
+    return 30
+}
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(showProfile: .constant(false), showContent: .constant(false))
+        HomeView(
+            showProfile: .constant(false),
+            showContent: .constant(false),
+            viewState: .constant(CGSize.zero)
+        )
             .preferredColorScheme(.dark)
             .environmentObject(UserStore())
+.previewInterfaceOrientation(.portrait)
     }
 }
 

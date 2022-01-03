@@ -21,7 +21,6 @@ struct TabBar: View {
                     Text("Courses")
                 }
         }
-        .edgesIgnoringSafeArea(.top)
     }
 }
 
@@ -30,5 +29,6 @@ struct TabBar_Previews: PreviewProvider {
         TabBar()
             .previewDevice("iPhone 13")
             .preferredColorScheme(.dark)
+            .environmentObject(UserStore())
     }
 }

@@ -32,7 +32,7 @@ struct MenuView: View {
                         self.showProfile = false
                     }
             }
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: 500)
             .frame(height: 300)
             .background(BlurView(style: .systemThinMaterial))
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))

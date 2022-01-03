@@ -34,6 +34,7 @@ class CourseStore: ObservableObject {
     @Published var courses: [Course] = courseData
     
     let colors: [Color] = [Color(.purple), Color(.green), Color(.red), Color(.blue), Color(.brown)]
+    var index: Int = 0
     
     init() {
         getArray(id: "course") { (items) in
@@ -44,10 +45,12 @@ class CourseStore: ObservableObject {
                         subtitle: item.fields["subtitle"] as! String,
                         image: Image("Card4"), //item.fields.linkedAsset(at: "image")?.url ?? URL(string: "")
                         logo: Image("Logo1"),
-                        color: self.colors.randomElement()!,
+                        color: self.colors[index],
                         show: false
                     )
                 )
+                
+                index = self.index + 1
             }
         }
     }

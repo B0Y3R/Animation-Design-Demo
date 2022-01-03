@@ -101,7 +101,7 @@ struct LoginView: View {
                         
                 }
                 .frame(height: 136)
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: 712)
                 .background(
                     BlurView(style: .systemMaterial)
                 )
