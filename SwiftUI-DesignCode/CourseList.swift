@@ -74,8 +74,6 @@ func getCardWidth(bounds: GeometryProxy) -> CGFloat {
 }
 
 func getCardCornerRadius(bounds: GeometryProxy) -> CGFloat {
-    
-    print("HIT <<<<<", bounds.size.width < 712, bounds.safeAreaInsets.top < 44, "HIT<<<")
     if bounds.size.width < 712 && bounds.safeAreaInsets.top < 44 { // if screen is not small and doesn't have a notch
         return 0
     }
@@ -128,6 +126,7 @@ var courseData = [
 struct CourseView: View {
     
     @State var activeView: CGSize = CGSize.zero
+    @State var isScrollable: Bool = false
     
     @Binding var show: Bool
     @Binding var active: Bool
@@ -151,12 +150,13 @@ struct CourseView: View {
                 Text("Minial coding experience required, such as in HTML and CSS. Please not tht Xcode 11 and Catalina are essential. Once you get everthing installed, it'll get a lot freindlier! I added a bunch of troubleshoots at the end if this page to help you navigate the issues you might encounter.")
             }
             .padding(30)
+            .opacity(show ? 0 : 1)
             .frame(maxWidth: show ? .infinity : bounds.size.width, maxHeight: show ? .infinity : 380 )
-            .offset(y: show ? 460 : 0)
-            .background(Color("background2"))
+            .offset(y: show ? 390 : 0)
+            .background(Color("background1"))
+           
             .clipShape(RoundedRectangle(cornerRadius: show ? getCardCornerRadius(bounds: bounds) : 30, style: .continuous))
             .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
-            .opacity(show ? 1 : 0)
             
             VStack {
                 HStack(alignment: .top) {
@@ -173,6 +173,7 @@ struct CourseView: View {
                     ZStack {
                         course.logo
                             .opacity(show ? 0 : 1)
+                        
                         Image(systemName: "xmark")
                             .frame(width: 40, height: 40)
                             .background(.black)
@@ -190,7 +191,7 @@ struct CourseView: View {
             }
             .padding(show ? 30 : 20)
             .padding(.top, show ? 30 : 0)
-            .frame(maxWidth: show ? .infinity : bounds.size.width, maxHeight: show ? 460 : 280)
+            .frame(maxWidth: bounds.size.width, maxHeight: show ? 460 : 280)
             .background(course.color)
             .clipShape(RoundedRectangle(cornerRadius: show ? getCardCornerRadius(bounds: bounds) : 30, style: .continuous))
             .shadow(color: Color.purple.opacity(0.3), radius: 20, x: 0, y: 20)
@@ -203,12 +204,24 @@ struct CourseView: View {
                 } else {
                     activeIndex = -1
                 }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.isScrollable = true
+                }
+            }
+            
+            if isScrollable {
+                CourseDetail(bounds: bounds, course: course, show: $show, active: $active, activeIndex: $activeIndex, isScrollable: $isScrollable)
+                    .background(Color("background1"))
+                    .clipShape(RoundedRectangle(cornerRadius: show ? getCardCornerRadius(bounds: bounds) : 30, style: .continuous))
+                    .animation(nil)
+                    .transition(.identity)
             }
         }
-        .frame(width: .infinity, height: show ? bounds.size.height + bounds.safeAreaInsets.top + bounds.safeAreaInsets.bottom : 280)
+        .frame(height: show ? bounds.size.height + bounds.safeAreaInsets.top + bounds.safeAreaInsets.bottom : 280)
         .contentShape(Rectangle())
         .scaleEffect(1 - activeView.height / 100)
-        .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.2))
+        .animation(.spring(response: 0.3, dampingFraction: 0.6, blendDuration: 0))
         .edgesIgnoringSafeArea(.all)
     }
 }

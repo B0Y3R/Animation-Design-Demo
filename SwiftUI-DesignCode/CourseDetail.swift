@@ -9,15 +9,18 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct CourseDetail: View {
+    var bounds: GeometryProxy
     var course: Course
     
     @Binding var show: Bool
     @Binding var active: Bool
     @Binding var activeIndex: Int
+    @Binding var isScrollable: Bool
+    
     
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: 0) {
                 VStack {
                     HStack(alignment: .top) {
                         VStack(alignment: .leading, spacing: 8.0) {
@@ -30,31 +33,33 @@ struct CourseDetail: View {
                         
                         Spacer()
                         
-                        ZStack {
-                            Image(systemName: "xmark")
-                                .frame(width: 40, height: 40)
-                                .background(.black)
-                                .foregroundColor(.primary)
-                                .clipShape(Circle())
-                                .onTapGesture {
-                                    show = false
-                                    active = false
-                                    activeIndex = -1
-                                }
+                    
+                        Image(systemName: "xmark")
+                            .frame(width: 40, height: 40)
+                            .background(.black)
+                            .foregroundColor(.white)
+                            .clipShape(Circle())
+                            .onTapGesture {
+                                show = false
+                                active = false
+                                activeIndex = -1
+                                self.isScrollable = false
+                            }
                         }
-                    }
-                    Spacer()
-                    course.image
-                        .resizable()
-                        .aspectRatio(contentMode:.fit)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 140, alignment: .top)
+               
+                        Spacer()
+                        course.image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 140, alignment: .top)
                 }
                 .padding(show ? 30 : 20)
                 .padding(.top, show ? 30 : 0)
-                .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? 460 : 280)
+                .frame(maxWidth: bounds.size.width)
+                .frame(height: show ? 460 : 280)
                 .background(course.color)
-                .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: show ? getCardCornerRadius(bounds: bounds) : 30, style: .continuous))
                 .shadow(color: Color.purple.opacity(0.3), radius: 20, x: 0, y: 20)
                 
                 VStack(alignment: .leading, spacing: 20) {
@@ -69,6 +74,7 @@ struct CourseDetail: View {
                 }
                 .foregroundColor(.primary)
                 .padding(30)
+                .offset(y: 20)
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -77,11 +83,15 @@ struct CourseDetail: View {
 
 struct CourseDetail_Previews: PreviewProvider {
     static var previews: some View {
-        CourseDetail(
-            course: courseData[1],
-            show: .constant(true),
-            active: .constant(true),
-            activeIndex: .constant(-1)
-        )
+        GeometryReader { bounds in
+            CourseDetail(
+                bounds: bounds,
+                course: courseData[1],
+                show: .constant(true),
+                active: .constant(true),
+                activeIndex: .constant(-1),
+                isScrollable: .constant(true)
+            )
+        }
     }
 }

@@ -45,12 +45,12 @@ class CourseStore: ObservableObject {
                         subtitle: item.fields["subtitle"] as! String,
                         image: Image("Card4"), //item.fields.linkedAsset(at: "image")?.url ?? URL(string: "")
                         logo: Image("Logo1"),
-                        color: self.colors[index],
+                        color: self.colors[self.index],
                         show: false
                     )
                 )
                 
-                index = self.index + 1
+                self.index = self.index + 1
             }
         }
     }

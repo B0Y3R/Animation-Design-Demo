@@ -29,7 +29,7 @@ struct SwiftUI_DesignCodeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Home()
+            TabBar()
                 .environmentObject(UserStore())
         }
     }
